@@ -106,7 +106,7 @@ function radians_to_degrees(radians) {
     hasRightCountIncreasedOnce = true;
     canBeProceedForRightCount = false;
     ++rightHandCount;
-    document.getElementById("rightHandCount").innerHTML = rightHandCount;
+    document.getElementById("rightHandCount").innerHTML = rightHandCount-1;
     // document.getElementById("myParagraph").innerHTML = "This is your paragraph!";
     // console.log("handCount", rightHandCount);
   }
@@ -140,7 +140,7 @@ function radians_to_degrees2(radians) {
     hasLeftCountIncreasedOnce = true;
     canBeProceedForLeftCount = false;
     ++leftHandCount;
-    document.getElementById("leftHandCount").innerHTML = leftHandCount;
+    document.getElementById("leftHandCount").innerHTML = leftHandCount-1;
     // document.getElementById("myParagraph").innerHTML = "This is your paragraph!";
     // console.log("handCount", rightHandCount);
   }
