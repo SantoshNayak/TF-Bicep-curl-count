@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- <title>Movenet Pose Detection</title> -->
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light p-0">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="./assets/img/kare4u-logo.png" alt="" width="200" height="50" class="d-inline-block align-text-top">
+            <!-- Bootstrap -->
+          </a>
+        </div>
+      </nav>
+    <!-- <img src="./assets/img/kare4u-logo.png" alt=""> -->
+
+    <div class="d-flex justify-content-between p-3">
+        <div>
+            <div class="text-center">
+                <h2>Bicep curl count</h2>
+            </div>
+
+            <div class="d-flex">
+                <div class="card" style="width: 18rem;">
+                    <!-- <img src="..." class="card-img-top" alt="..."> -->
+                    <div class="card-body text-center">
+                      <h5 class="card-title count"  id='rightHandCount'></h5>
+                      <p class="card-text "> Right Hand</p>
+                    </div>
+                  </div>
+                <div class="card" style="width: 18rem;">
+                    <!-- <img src="..." class="card-img-top" alt="..."> -->
+                    <div class="card-body text-center">
+                      <h5 class="card-title count"  id='leftHandCount'></h5>
+                      <p class="card-text "> Left Hand</p>
+                    </div>
+                  </div>
+            </div>
+     
+
+
+            <!-- <h5>
+                Right Hand
+            </h5>
+            <h1 id='rightHandCount'></h1>
+            <h5>
+                Left Hand
+            </h5>
+            <h1 id='leftHandCount'></h1> -->
+        </div>
+
+        <div>
+            <video id="video" autoplay style="display: none;"></video>
+            <canvas id="canvas" width="600" height="400"></canvas>
+        </div>
+    </div>
+
+    <!-- <p>This Face detection is done using</p>
+    <a href="https://github.com/tensorflow/tfjs-models/tree/master/pose-detection/src/movenet">https://github.com/tensorflow/tfjs-models/tree/master/pose-detection/src/movenet</a>
+    -->
+
+</body>
+
+
+<!-- Require the peer dependencies of pose-detection. -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+<!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+<!-- Alternatively you can use the WASM backend: <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js"></script> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+
+<script src="./script.js"></script>
+
+</html>
