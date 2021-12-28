@@ -22,7 +22,7 @@ const detectPose = async () => {
 
   if (poses.length) angleCalculation(poses[0].keypoints);
 
-  ctx.drawImage(video, 0, 0, 600, 400);
+  ctx.drawImage(video, 0, 0, window.innerWidth, window.innerHeight);
 
   poses.forEach((eachPose) => {
     ctx.beginPath();
