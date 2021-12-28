@@ -6,7 +6,7 @@ const setupCamera = () => {
   console.log("ss");
   navigator.mediaDevices
     .getUserMedia({
-      video: { width: 600, height: 400 },
+      video: { width: window.innerWidth, height: window.innerHeight },
       audio: false,
     })
     .then((stream) => {
