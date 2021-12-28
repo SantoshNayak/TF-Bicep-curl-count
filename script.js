@@ -20,8 +20,7 @@ const detectPose = async () => {
   // const predictions = await model.estimateHands(document.querySelector("video"));
   console.log(poses);
 
-  if(poses.length)
-  angleCalculation(poses[0].keypoints);
+  if (poses.length) angleCalculation(poses[0].keypoints);
 
   ctx.drawImage(video, 0, 0, 600, 400);
 
@@ -63,7 +62,11 @@ function angleCalculation(arr) {
 
   // angle = Math.degrees(Math.atan2(right_wrist.y - right_elbow.y, right_wrist.x - right_elbow.x) - Math.atan2(right_shoulder.y - right_elbow.y, right_shoulder.x - right_elbow.x))
 
-  if(right_shoulder.score > 0.5 && right_elbow.score > 0.5 && right_wrist.score > 0.5){
+  if (
+    right_shoulder.score > 0.5 &&
+    right_elbow.score > 0.5 &&
+    right_wrist.score > 0.5
+  ) {
     radians_to_degrees(
       Math.atan2(right_wrist.y - right_elbow.y, right_wrist.x - right_elbow.x) -
         Math.atan2(
@@ -73,12 +76,17 @@ function angleCalculation(arr) {
     );
   }
 
-
-
-  if(left_shoulder.score > 0.5 && left_elbow.score > 0.5 && left_wrist.score > 0.5){
+  if (
+    left_shoulder.score > 0.5 &&
+    left_elbow.score > 0.5 &&
+    left_wrist.score > 0.5
+  ) {
     radians_to_degrees2(
       Math.atan2(left_wrist.y - left_elbow.y, left_wrist.x - left_elbow.x) -
-        Math.atan2(left_shoulder.y - left_elbow.y, left_shoulder.x - left_elbow.x)
+        Math.atan2(
+          left_shoulder.y - left_elbow.y,
+          left_shoulder.x - left_elbow.x
+        )
     );
   }
   // radians_to_degrees2(
@@ -132,10 +140,8 @@ function radians_to_degrees2(radians) {
   var pi = Math.PI;
   let angle = radians * (180 / pi);
 
+  if (Math.sign(angle) == 0) return false;
 
-  if(Math.sign(angle) == 0)
-    return false
-  
   if (angle < thresholdAngle && hasLeftCountIncreasedOnce) {
     canBeProceedForLeftCount = true;
   }
@@ -158,11 +164,15 @@ let detector;
 
 setupCamera();
 video.addEventListener("loadeddata", async () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
   detector = await poseDetection.createDetector(
     poseDetection.SupportedModels.MoveNet,
     detectorConfig
   );
 
-  document.getElementById('loadingText').innerHTML = 'Please stand in camera so that it can see full body'
+  document.getElementById("loadingText").innerHTML =
+    "Please stand in camera so that it can see full body";
   setInterval(detectPose, 30);
 });
