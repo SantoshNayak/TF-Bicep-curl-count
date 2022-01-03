@@ -2,11 +2,14 @@ let video = document.getElementById("video");
 let model;
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
+let windowHeight =  window.outerHeight*0.4;
+let windowWidth =  window.outerWidth-50;
+alert(window.outerWidth);
 const setupCamera = () => {
   console.log("ss");
   navigator.mediaDevices
     .getUserMedia({
-      video: { width: 600, height: 400 },
+      video: { width: windowWidth, height: windowHeight },
       audio: false,
     })
     .then((stream) => {
@@ -23,7 +26,7 @@ const detectPose = async () => {
   if(poses.length)
   angleCalculation(poses[0].keypoints);
 
-  ctx.drawImage(video, 0, 0, 600, 400);
+  ctx.drawImage(video, 0, 0, windowWidth, windowHeight);
 
   poses.forEach((eachPose) => {
     ctx.beginPath();
@@ -158,7 +161,8 @@ let detector;
 
 setupCamera();
 video.addEventListener("loadeddata", async () => {
-  
+  canvas.width = windowWidth;
+  canvas.height = windowHeight;
   detector = await poseDetection.createDetector(
     poseDetection.SupportedModels.MoveNet,
     detectorConfig
