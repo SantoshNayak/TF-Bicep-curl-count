@@ -3,7 +3,9 @@ let model;
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 let windowHeight =  window.outerHeight*0.4;
-let windowWidth =  window.outerWidth-50;
+let windowWidth =  window.outerWidth-100;
+alert(windowWidth)
+// alert(document.getElementsByClassName("test").offsetWidth);
 // alert(window.outerWidth);
 const setupCamera = () => {
   console.log("ss");
@@ -18,6 +20,7 @@ const setupCamera = () => {
 };
 
 const detectPose = async () => {
+  // alert(document.getElementById("video").offsetWidth)
   const poses = await detector.estimatePoses(document.querySelector("video"));
 
   // const predictions = await model.estimateHands(document.querySelector("video"));
@@ -26,7 +29,7 @@ const detectPose = async () => {
   if(poses.length)
   angleCalculation(poses[0].keypoints);
 
-  ctx.drawImage(video, 0, 0, windowWidth, windowHeight);
+  ctx.drawImage(video, 0, 0, document.getElementById("video").offsetWidth, document.getElementById("video").offsetHeight);
 
   poses.forEach((eachPose) => {
     ctx.beginPath();
@@ -163,6 +166,8 @@ setupCamera();
 video.addEventListener("loadeddata", async () => {
   canvas.width = windowWidth;
   canvas.height = windowHeight;
+  canvas.setAttribute('width', windowWidth);
+  canvas.setAttribute('height', windowHeight);
   detector = await poseDetection.createDetector(
     poseDetection.SupportedModels.MoveNet,
     detectorConfig
