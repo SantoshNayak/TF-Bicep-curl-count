@@ -4,7 +4,7 @@ let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 let windowHeight =  window.outerHeight*0.4;
 let windowWidth =  window.outerWidth-100;
-// alert(windowWidth)
+// alert(windowWidth) 
 // alert(document.getElementsByClassName("test").offsetWidth);
 // alert(window.outerWidth);
 const setupCamera = () => {
@@ -28,8 +28,9 @@ const detectPose = async () => {
 
   if(poses.length)
   angleCalculation(poses[0].keypoints);
-
-  ctx.drawImage(video, 0, 0, document.getElementById("video").offsetWidth, document.getElementById("video").offsetHeight);
+  // canvas.width = windowWidth;
+  // canvas.height = windowHeight;
+  ctx.drawImage(video, 0, 0, windowWidth, windowHeight);
 
   poses.forEach((eachPose) => {
     ctx.beginPath();
@@ -165,6 +166,7 @@ let detector;
 setupCamera();
 video.addEventListener("loadeddata", async () => {
   // document.getElementById("video").offsetWidth, document.getElementById("video").offsetHeight
+  
   canvas.width = document.getElementById("video").offsetWidth;
   canvas.height = document.getElementById("video").offsetHeight;
   canvas.setAttribute('width', windowWidth);
