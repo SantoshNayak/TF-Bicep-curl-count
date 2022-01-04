@@ -4,7 +4,7 @@ let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 let windowHeight =  window.outerHeight*0.4;
 let windowWidth =  window.outerWidth-100;
-alert(windowWidth)
+// alert(windowWidth)
 // alert(document.getElementsByClassName("test").offsetWidth);
 // alert(window.outerWidth);
 const setupCamera = () => {
@@ -164,8 +164,9 @@ let detector;
 
 setupCamera();
 video.addEventListener("loadeddata", async () => {
-  canvas.width = windowWidth;
-  canvas.height = windowHeight;
+  // document.getElementById("video").offsetWidth, document.getElementById("video").offsetHeight
+  canvas.width = document.getElementById("video").offsetWidth;
+  canvas.height = document.getElementById("video").offsetHeight;
   canvas.setAttribute('width', windowWidth);
   canvas.setAttribute('height', windowHeight);
   detector = await poseDetection.createDetector(
