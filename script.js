@@ -2,13 +2,31 @@ let video = document.getElementById("video");
 let model;
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
-let windowHeight =  window.outerHeight*0.4;
-let windowWidth =  window.outerWidth-100;
-// alert(windowWidth) 
+let windowHeight = window.outerHeight * 0.4;
+let windowWidth = window.outerWidth - 100;
+// alert(windowWidth)
 // alert(document.getElementsByClassName("test").offsetWidth);
 // alert(window.outerWidth);
+
+var thresholdAngle = 130;
+
+var rightHandCount = 0;
+var canBeProceedForRightCount = true;
+var hasRightCountIncreasedOnce = false;
+
+var leftHandCount = 0;
+var canBeProceedForLeftCount = true;
+var hasLeftCountIncreasedOnce = false;
+
+var isGoalAchieved = false;
+var goalCount = 5;
+const detectorConfig = {
+  modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
+};
+
+let detector;
+
 const setupCamera = () => {
-  console.log("ss");
   navigator.mediaDevices
     .getUserMedia({
       video: { width: windowWidth, height: windowHeight },
@@ -16,6 +34,7 @@ const setupCamera = () => {
     })
     .then((stream) => {
       video.srcObject = stream;
+      document.getElementById('goalCount').innerHTML = goalCount
     });
 };
 
@@ -24,10 +43,9 @@ const detectPose = async () => {
   const poses = await detector.estimatePoses(document.querySelector("video"));
 
   // const predictions = await model.estimateHands(document.querySelector("video"));
-  console.log(poses);
+  // console.log(poses);
 
-  if(poses.length)
-  angleCalculation(poses[0].keypoints);
+  if (poses.length) angleCalculation(poses[0].keypoints);
   // canvas.width = windowWidth;
   // canvas.height = windowHeight;
   ctx.drawImage(video, 0, 0, windowWidth, windowHeight);
@@ -70,8 +88,19 @@ function angleCalculation(arr) {
 
   // angle = Math.degrees(Math.atan2(right_wrist.y - right_elbow.y, right_wrist.x - right_elbow.x) - Math.atan2(right_shoulder.y - right_elbow.y, right_shoulder.x - right_elbow.x))
 
-  if(right_shoulder.score > 0.5 && right_elbow.score > 0.5 && right_wrist.score > 0.5){
-    radians_to_degrees(
+  if (rightHandCount > 5 && leftHandCount > 5 && !isGoalAchieved) {
+    console.log("IAM  DONE");
+    isGoalAchieved = true;
+    document.getElementById("goalMessage").innerHTML = "Goal Achieved!";
+    sendMessagetoFlutter(true);
+    return;
+  }
+  if (
+    right_shoulder.score > 0.5 &&
+    right_elbow.score > 0.5 &&
+    right_wrist.score > 0.5
+  ) {
+    radians_to_degrees_rightHand(
       Math.atan2(right_wrist.y - right_elbow.y, right_wrist.x - right_elbow.x) -
         Math.atan2(
           right_shoulder.y - right_elbow.y,
@@ -80,12 +109,17 @@ function angleCalculation(arr) {
     );
   }
 
-
-
-  if(left_shoulder.score > 0.5 && left_elbow.score > 0.5 && left_wrist.score > 0.5){
-    radians_to_degrees2(
+  if (
+    left_shoulder.score > 0.5 &&
+    left_elbow.score > 0.5 &&
+    left_wrist.score > 0.5
+  ) {
+    radians_to_degrees_LeftHand(
       Math.atan2(left_wrist.y - left_elbow.y, left_wrist.x - left_elbow.x) -
-        Math.atan2(left_shoulder.y - left_elbow.y, left_shoulder.x - left_elbow.x)
+        Math.atan2(
+          left_shoulder.y - left_elbow.y,
+          left_shoulder.x - left_elbow.x
+        )
     );
   }
   // radians_to_degrees2(
@@ -94,17 +128,7 @@ function angleCalculation(arr) {
   // );
 }
 
-var thresholdAngle = 130;
-
-var rightHandCount = 0;
-var canBeProceedForRightCount = true;
-var hasRightCountIncreasedOnce = false;
-
-var leftHandCount = 0;
-var canBeProceedForLeftCount = true;
-var hasLeftCountIncreasedOnce = false;
-
-function radians_to_degrees(radians) {
+function radians_to_degrees_rightHand(radians) {
   var pi = Math.PI;
   let angle = radians * (180 / pi);
 
@@ -120,29 +144,14 @@ function radians_to_degrees(radians) {
     // document.getElementById("myParagraph").innerHTML = "This is your paragraph!";
     // console.log("handCount", rightHandCount);
   }
-
-  // if (angle < thresholdAngle && hasLeftCountIncreasedOnce) {
-  //   canBeProceedForLeftCount = true;
-  // }
-
-  // if (angle > thresholdAngle && canBeProceedForLeftCount) {
-  //   hasLeftCountIncreasedOnce = true;
-  //   canBeProceedForLeftCount = false;
-  //   ++leftHandCount;
-  //   document.getElementById("leftHandCount").innerHTML = leftHandCount;
-  //   // document.getElementById("myParagraph").innerHTML = "This is your paragraph!";
-  //   // console.log("handCount", rightHandCount);
-  // }
 }
 
-function radians_to_degrees2(radians) {
+function radians_to_degrees_LeftHand(radians) {
   var pi = Math.PI;
   let angle = radians * (180 / pi);
 
+  if (Math.sign(angle) == 0) return false;
 
-  if(Math.sign(angle) == 0)
-    return false
-  
   if (angle < thresholdAngle && hasLeftCountIncreasedOnce) {
     canBeProceedForLeftCount = true;
   }
@@ -157,34 +166,25 @@ function radians_to_degrees2(radians) {
   }
 }
 
-const detectorConfig = {
-  modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
-};
-
-let detector;
-
 setupCamera();
 video.addEventListener("loadeddata", async () => {
   // document.getElementById("video").offsetWidth, document.getElementById("video").offsetHeight
-  
+
   canvas.width = document.getElementById("video").offsetWidth;
   canvas.height = document.getElementById("video").offsetHeight;
-  canvas.setAttribute('width', windowWidth);
-  canvas.setAttribute('height', windowHeight);
+  canvas.setAttribute("width", windowWidth);
+  canvas.setAttribute("height", windowHeight);
   detector = await poseDetection.createDetector(
     poseDetection.SupportedModels.MoveNet,
     detectorConfig
   );
 
-  document.getElementById('loadingText').innerHTML = 'Please stand in camera so that it can see full body'
+  document.getElementById("loadingText").innerHTML =
+    "Please stand in camera so that it can see full body";
   setInterval(detectPose, 30);
 });
 
-
-
-
-function sendMessagetoFlutter(){
-  console.log('tesssst')
-  window.Print.postMessage('Hello from JS');
-
+function sendMessagetoFlutter(value) {
+  console.log(value);
+  // window.CHANNEL_NAME.postMessage('Hello from JS');
 }

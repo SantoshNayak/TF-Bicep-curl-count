@@ -2,12 +2,16 @@
   background-color: #def8fc;
 }
 canvas {
-  border: 10px solid #f58220;
+  border: 5px solid #f58220;
   border-radius: 9px;
 }
 .count {
   color: #f58220;
   font-size: 60px;
+}
+.goalachieved{
+  color: #f58220;
+  font-size: 20px;
 }
 .test {
   display: block;
