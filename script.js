@@ -179,3 +179,12 @@ video.addEventListener("loadeddata", async () => {
   document.getElementById('loadingText').innerHTML = 'Please stand in camera so that it can see full body'
   setInterval(detectPose, 30);
 });
+
+
+
+
+function sendMessagetoFlutter(){
+  console.log('tesssst')
+  window.Print.postMessage('Hello from JS');
+
+}
