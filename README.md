@@ -9,3 +9,6 @@ https://github.com/tensorflow/tfjs-models/tree/master/pose-detection/src/movenet
 # Access The Live Website here
 
 https://santoshnayak.github.io/TF-Bicep-curl-count
+
+# Demo
+[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://santoshnayak.github.io/assets/videos/curl.mp4)
