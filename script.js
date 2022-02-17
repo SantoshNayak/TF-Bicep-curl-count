@@ -24,6 +24,9 @@ const detectorConfig = {
   modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
 };
 
+var targetCount = 10;
+
+
 let detector;
 
 const setupCamera = () => {
@@ -88,10 +91,10 @@ function angleCalculation(arr) {
 
   // angle = Math.degrees(Math.atan2(right_wrist.y - right_elbow.y, right_wrist.x - right_elbow.x) - Math.atan2(right_shoulder.y - right_elbow.y, right_shoulder.x - right_elbow.x))
 
-  if (rightHandCount > 5 && leftHandCount > 5 && !isGoalAchieved) {
+  if (rightHandCount > targetCount && leftHandCount > targetCount && !isGoalAchieved) {
     console.log("IAM  DONE");
     isGoalAchieved = true;
-    document.getElementById("goalMessage").innerHTML = "Goal Achieved!";
+    document.getElementById("goalMessage").innerHTML =  "🎇 Target Achieved 🎇";
     sendMessagetoFlutter(true);
     return;
   }
@@ -122,10 +125,7 @@ function angleCalculation(arr) {
         )
     );
   }
-  // radians_to_degrees2(
-  //   Math.atan2(left_wrist.y - left_elbow.y, left_wrist.x - left_elbow.x) -
-  //     Math.atan2(left_shoulder.y - left_elbow.y, left_shoulder.x - left_elbow.x)
-  // );
+
 }
 
 function radians_to_degrees_rightHand(radians) {
@@ -169,6 +169,16 @@ function radians_to_degrees_LeftHand(radians) {
 setupCamera();
 video.addEventListener("loadeddata", async () => {
   // document.getElementById("video").offsetWidth, document.getElementById("video").offsetHeight
+
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  if (urlParams.get("goal")) {
+    targetCount = urlParams.get("goal");
+  }
+  document.getElementById("targetCount").innerHTML = targetCount;
+
+
+
 
   canvas.width = document.getElementById("video").offsetWidth;
   canvas.height = document.getElementById("video").offsetHeight;
