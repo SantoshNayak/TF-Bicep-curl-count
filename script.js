@@ -19,7 +19,7 @@ var canBeProceedForLeftCount = true;
 var hasLeftCountIncreasedOnce = false;
 
 var isGoalAchieved = false;
-var goalCount = 5;
+// var goalCount = 5;
 const detectorConfig = {
   modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
 };
@@ -37,7 +37,7 @@ const setupCamera = () => {
     })
     .then((stream) => {
       video.srcObject = stream;
-      document.getElementById('goalCount').innerHTML = goalCount
+      // document.getElementById('goalCount').innerHTML = goalCount
     });
 };
 
@@ -190,7 +190,7 @@ video.addEventListener("loadeddata", async () => {
   );
 
   document.getElementById("loadingText").innerHTML =
-    "Please stand in camera so that it can see full body";
+    "Please stand in front of camera";
   setInterval(detectPose, 30);
 });
 
