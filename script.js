@@ -3,8 +3,7 @@ let model;
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 let windowHeight = window.outerHeight * 0.4;
-let windowWidth = 500;
-// let windowWidth = window.outerWidth - 100;
+let windowWidth = window.outerWidth - 100;
 // alert(windowWidth)
 // alert(document.getElementsByClassName("test").offsetWidth);
 // alert(window.outerWidth);
@@ -184,12 +183,6 @@ video.addEventListener("loadeddata", async () => {
   canvas.height = document.getElementById("video").offsetHeight;
   canvas.setAttribute("width", windowWidth);
   canvas.setAttribute("height", windowHeight);
-
-
-//   video.setAttribute('height', windowHeight);
-// video.setAttribute('width', windowWidth);
-
-
   // detector = await poseDetection.createDetector(
   //   poseDetection.SupportedModels.MoveNet,
   //   detectorConfig
