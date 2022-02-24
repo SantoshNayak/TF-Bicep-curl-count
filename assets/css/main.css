@@ -1,12 +1,12 @@
-* {
+/* * {
   background-color: #000;
   color: #def8fc;
-}
+} */
 canvas {
   /* border: 5px solid #f58220; */
   border-radius: 15px;
 }
-.count {
+/* .count {
   color: #f58220;
   font-size: 60px;
 }
@@ -18,7 +18,7 @@ canvas {
   display: block;
   margin: auto;
   height: auto;
-}
+} */
 
 /* #canvas {
   width: 100%;
