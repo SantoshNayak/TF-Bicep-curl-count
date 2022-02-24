@@ -1,9 +1,10 @@
 * {
-  background-color: #def8fc;
+  background-color: #000;
+  color: #def8fc;
 }
 canvas {
-  border: 5px solid #f58220;
-  border-radius: 9px;
+  /* border: 5px solid #f58220; */
+  border-radius: 15px;
 }
 .count {
   color: #f58220;

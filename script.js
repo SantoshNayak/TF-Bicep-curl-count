@@ -19,10 +19,9 @@ var canBeProceedForLeftCount = true;
 var hasLeftCountIncreasedOnce = false;
 
 var isGoalAchieved = false;
-// var goalCount = 5;
-const detectorConfig = {
-  modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
-};
+// const detectorConfig = {
+//   modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
+// };
 
 var targetCount = 10;
 
@@ -184,14 +183,20 @@ video.addEventListener("loadeddata", async () => {
   canvas.height = document.getElementById("video").offsetHeight;
   canvas.setAttribute("width", windowWidth);
   canvas.setAttribute("height", windowHeight);
-  detector = await poseDetection.createDetector(
-    poseDetection.SupportedModels.MoveNet,
-    detectorConfig
-  );
+
+
+  video.setAttribute('height', windowHeight);
+video.setAttribute('width', windowWidth);
+
+
+  // detector = await poseDetection.createDetector(
+  //   poseDetection.SupportedModels.MoveNet,
+  //   detectorConfig
+  // );
 
   document.getElementById("loadingText").innerHTML =
     "Please stand in front of camera";
-  setInterval(detectPose, 30);
+  // setInterval(detectPose, 30);
 });
 
 function sendMessagetoFlutter(value) {
