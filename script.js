@@ -1,7 +1,7 @@
 let video = document.getElementById("video");
 let model;
-let canvas = document.getElementById("canvas");
-let ctx = canvas.getContext("2d");
+// let canvas = document.getElementById("canvas");
+// let ctx = canvas.getContext("2d");
 let windowHeight = window.outerHeight * 0.4;
 let windowWidth = window.outerWidth - 100;
 // alert(windowWidth)
@@ -179,14 +179,15 @@ video.addEventListener("loadeddata", async () => {
 
 
 
-  canvas.width = document.getElementById("video").offsetWidth;
-  canvas.height = document.getElementById("video").offsetHeight;
-  canvas.setAttribute("width", windowWidth);
-  canvas.setAttribute("height", windowHeight);
-  // detector = await poseDetection.createDetector(
-  //   poseDetection.SupportedModels.MoveNet,
-  //   detectorConfig
-  // );
+  // canvas.width = document.getElementById("video").offsetWidth;
+  // canvas.height = document.getElementById("video").offsetHeight;
+  // canvas.setAttribute("width", windowWidth);
+  // canvas.setAttribute("height", windowHeight);
+
+
+
+
+
 
   document.getElementById("loadingText").innerHTML =
     "Please stand in front of camera";
