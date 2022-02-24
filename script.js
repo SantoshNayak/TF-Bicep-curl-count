@@ -26,6 +26,14 @@ const detectorConfig = {
 var targetCount = 10;
 
 
+// Hacks for Mobile Safari
+video.setAttribute("playsinline", true);
+video.setAttribute("controls", true);
+setTimeout(() => {
+    video.removeAttribute("controls");
+});
+
+
 let detector;
 
 const setupCamera = () => {
@@ -45,7 +53,7 @@ const detectPose = async () => {
   const poses = await detector.estimatePoses(document.querySelector("video"));
 
   // const predictions = await model.estimateHands(document.querySelector("video"));
-  console.log(poses);
+  // console.log(poses);
 
   if (poses.length) angleCalculation(poses[0].keypoints);
 
