@@ -95,11 +95,21 @@ function angleCalculation(arr) {
     sendMessagetoFlutter(true);
     return;
   }
+
   if (
     right_shoulder.score > 0.5 &&
     right_elbow.score > 0.5 &&
-    right_wrist.score > 0.5
+    right_wrist.score > 0.5 && 
+    left_shoulder.score > 0.5 &&
+    left_elbow.score > 0.5 &&
+    left_wrist.score > 0.5
   ) {
+
+    document.getElementById("video").style.borderColor = "green";
+
+    off()
+
+
     radians_to_degrees_rightHand(
       Math.atan2(right_wrist.y - right_elbow.y, right_wrist.x - right_elbow.x) -
         Math.atan2(
@@ -107,13 +117,7 @@ function angleCalculation(arr) {
           right_shoulder.x - right_elbow.x
         )
     );
-  }
 
-  if (
-    left_shoulder.score > 0.5 &&
-    left_elbow.score > 0.5 &&
-    left_wrist.score > 0.5
-  ) {
     radians_to_degrees_LeftHand(
       Math.atan2(left_wrist.y - left_elbow.y, left_wrist.x - left_elbow.x) -
         Math.atan2(
@@ -121,7 +125,23 @@ function angleCalculation(arr) {
           left_shoulder.x - left_elbow.x
         )
     );
+
+
   }
+
+  // if (
+  //   left_shoulder.score > 0.5 &&
+  //   left_elbow.score > 0.5 &&
+  //   left_wrist.score > 0.5
+  // ) {
+  //   radians_to_degrees_LeftHand(
+  //     Math.atan2(left_wrist.y - left_elbow.y, left_wrist.x - left_elbow.x) -
+  //       Math.atan2(
+  //         left_shoulder.y - left_elbow.y,
+  //         left_shoulder.x - left_elbow.x
+  //       )
+  //   );
+  // }
 
 }
 
@@ -193,9 +213,20 @@ video.addEventListener("loadeddata", async () => {
   document.getElementById("loadingText").innerHTML =
     "Please stand in front of camera";
   setInterval(detectPose, 30);
+  on();
+  document.getElementById("overlaytext").innerHTML = "Detecting";
 });
 
 function sendMessagetoFlutter(value) {
   console.log(value);
   // window.CHANNEL_NAME.postMessage('Hello from JS');
+}
+
+
+function on() {
+  document.getElementById("overlay").style.display = "block";
+}
+
+function off() {
+  document.getElementById("overlay").style.display = "none";
 }
